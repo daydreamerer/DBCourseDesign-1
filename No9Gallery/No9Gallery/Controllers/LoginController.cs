@@ -24,8 +24,9 @@ namespace No9Gallery.Controllers
             _signUpService = signUpService;
         }
 
-        public IActionResult Welcome()
+        public async Task<IActionResult> Welcome()
         {
+            await HttpContext.SignOutAsync();
             return View();
         }
 
