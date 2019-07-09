@@ -15,6 +15,7 @@ namespace No9Gallery.Controllers
         private readonly ILoginService _loginService;
         private readonly ISignUpService _signUpService;
 
+
         public LoginController(
             ILoginService loginService,
             ISignUpService signUpService)

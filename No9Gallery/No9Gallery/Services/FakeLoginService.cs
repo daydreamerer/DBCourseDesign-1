@@ -28,7 +28,7 @@ namespace No9Gallery.Services
                     {
                         con.Open();
                         cmd.BindByName = true;
-                        cmd.CommandText = "select * from users where ID = '" + ID + "' and password = '" + password + "'";
+                        cmd.CommandText = "select * from users where user_ID = '" + ID + "' and password = '" + password + "'";
                         OracleDataReader reader = cmd.ExecuteReader();
 
                         if (reader.Read() != false)

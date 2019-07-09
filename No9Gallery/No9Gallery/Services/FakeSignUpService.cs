@@ -20,7 +20,7 @@ namespace No9Gallery.Services
                     {
                         con.Open();
                         cmd.BindByName = true;
-                        cmd.CommandText = "select count(*) from users where ID = '" + signUpId + "'";
+                        cmd.CommandText = "select count(*) from users where user_ID = '" + signUpId + "'";
                         OracleDataReader reader = cmd.ExecuteReader();
                         reader.Read();
 
