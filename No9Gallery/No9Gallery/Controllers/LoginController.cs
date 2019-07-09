@@ -15,6 +15,7 @@ namespace No9Gallery.Controllers
         private readonly ILoginService _loginService;
         private readonly ISignUpService _signUpService;
 
+
         public LoginController(
             ILoginService loginService,
             ISignUpService signUpService)
@@ -23,12 +24,13 @@ namespace No9Gallery.Controllers
             _signUpService = signUpService;
         }
 
-        public IActionResult Welcome()
+        public async Task<IActionResult> Welcome()
         {
+            await HttpContext.SignOutAsync();
             return View();
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             await HttpContext.SignOutAsync();
             LoginUser user = new LoginUser();

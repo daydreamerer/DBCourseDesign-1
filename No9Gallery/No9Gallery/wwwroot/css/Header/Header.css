@@ -5,14 +5,19 @@
 
 .avatarBox {
     border-radius: 6px;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     overflow: hidden;
 }
 
+.Logo {
+    font-weight: 600;
+    font-size: 20px;
+}
+
 .search-box {
-    width: 240px;
-    height: 40px;
+    width: 300px;
+    height: 36px;
     border-radius: 6px;
     outline: none;
     border: 1px solid #ccc;
@@ -23,7 +28,7 @@
     height: 25px;
     width: 25px;
     top: 15px;
-    background: url("../image/主页面控件/Search.png");
+    background: url("../../image/Header/SearchIcon.png");
     border: none;
     outline: none;
     cursor: pointer;
