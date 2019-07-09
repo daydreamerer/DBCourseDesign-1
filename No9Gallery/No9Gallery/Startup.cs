@@ -37,13 +37,14 @@ namespace No9Gallery
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
                 {
-                    o.LoginPath = new PathString("/Login/Index");
+                    o.LoginPath = new PathString("/Login/Welcome");
                     //未实现
                     o.AccessDeniedPath = new PathString("/Home/Error");
                 });
             //----------------------------------------------------------------
 
-            services.AddSingleton<ILoginServiceInterface, FakeLoginService>();
+            services.AddSingleton<ILoginService, FakeLoginService>();
+            services.AddSingleton<ISignUpService, FakeSignUpService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

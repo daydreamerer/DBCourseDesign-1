@@ -12,10 +12,10 @@ namespace No9Gallery.Services
         public static string conString = "User Id=C##DBCD;Password=12345678;Data Source=localhost:1521/orcl";
     }
 
-    public class FakeLoginService: ILoginServiceInterface
+    public class FakeLoginService: ILoginService
     {
 
-        public LoginUser CheckLogin(string ID, string password)
+        public async Task<LoginUser> CheckLogin(string ID, string password)
         {
 
             string getID, getName, getAvatar, getStatus;
