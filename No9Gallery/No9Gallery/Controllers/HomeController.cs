@@ -26,6 +26,14 @@ namespace No9Gallery.Controllers
             return View();
         }
 
+
+
+        public IActionResult Search(string search_value) 
+        {
+            string saa = search_value;
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -2,6 +2,7 @@
     @using System.Security.Claims;
 }
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,10 +61,12 @@
                     border-right: 0; /* 去掉左侧边框 */
                 }
             </style>
-            <form  action="" class="parent">
-                <input style="position: absolute;left: 1200px;top: 10px;"type="text" class="search-box" placeholder="Search">
-                <input style="position: absolute;left: 1440px;top: 20px;" type="button" name="" id="" class="search-btn" asp-controller="Home" asp-action="Search" asp-route-id="">
+            <form asp-action="Search" asp-controller="Home" class="parent">
+                <input  style="position: absolute;left: 1200px;top: 10px;" type="text"  class="search-box" placeholder="Search" name="search_value">
+                <button style="position: absolute;left: 1458px;top: 20px;" type ="submit" class="search-btn"></button>
             </form>
+
+            
             @{
                 //
                 //需要获取用户ID
@@ -72,27 +75,27 @@
                 //当用户未登录
                 if (User.Identity.Name == null)
                 {
-                    
-                <a style="position: absolute;left: 1500px;top: 10px;" asp-controller="Login" asp-action="Welcome">
-                    <div class="avatarBox">
-                        <img src="~/image/avatar/null.png" class="avatar" />
-                    </div>
-                </a>
+
+                    <a style="position: absolute;left: 1520px;top: 10px;" asp-controller="Login" asp-action="Welcome">
+                        <div class="avatarBox">
+                            <img src="~/image/avatar/null.png" class="avatar" />
+                        </div>
+                    </a>
 
                 }
                 //当用户已经登录
                 else
-                { 
-                    <a style="position: absolute;left: 1500px;top: 10px;" asp-controller="PersonInfo" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier).Value">
+                {
+                    <a style="position: absolute;left: 1520px;top: 10px;" asp-controller="PersonInfo" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier).Value">
                         <div class="avatarBox">
                             <img src="~/image/avatar/@User.Claims.SingleOrDefault(sa => sa.Type == "Avatar").Value" class="avatar" />
                         </div>
                     </a>
-                    
-                }
-              }
 
-            </nav>
+                }
+            }
+
+        </nav>
     </header>
     <div >
         <partial name="_CookieConsentPartial" />

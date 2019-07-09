@@ -11,7 +11,7 @@
 }
 
 .search-box {
-    width: 240px;
+    width: 300px;
     height: 40px;
     border-radius: 6px;
     outline: none;
@@ -23,7 +23,7 @@
     height: 25px;
     width: 25px;
     top: 15px;
-    background: url("../image/主页面控件/Search.png");
+    background: url("../../image/Header/SearchIcon.png");
     border: none;
     outline: none;
     cursor: pointer;

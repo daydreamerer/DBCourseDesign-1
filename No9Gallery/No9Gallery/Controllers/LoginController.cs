@@ -28,7 +28,7 @@ namespace No9Gallery.Controllers
             return View();
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             await HttpContext.SignOutAsync();
             LoginUser user = new LoginUser();
