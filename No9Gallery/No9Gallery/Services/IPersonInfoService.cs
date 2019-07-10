@@ -18,5 +18,12 @@ namespace No9Gallery.Services
         Task<string> ChangeFollow(string visitid, string id);
         Task<string> UploadWork(string Userid,IFormFile file, string Workname, string WorkType,string Introduction);
         Task<string> Upgrade(string id,string Level,string Points);
+
+        //新加
+        Task<List<MessageList>> GetReportAsync();
+        Task<string> PostMassage(string adminID, string ReceiverID, string Content,string Time);
+        Task<string> ChangeMessage();
+        Task<List<MessageReceivelist>> GetMessageAsync(string id);
+        Task<string> setRead(string msgid);
     }
 }
