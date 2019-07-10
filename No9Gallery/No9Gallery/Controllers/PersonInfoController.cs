@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace No9Gallery.Controllers
 
 
         //进入个人主界面
-       [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult> Index(string id)
         {
             
@@ -91,7 +92,7 @@ namespace No9Gallery.Controllers
         }
 
         //改变关注状态
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult> Follow(string id)
         {
             var visitid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -101,7 +102,7 @@ namespace No9Gallery.Controllers
 
 
         //进入信箱界面
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult> MessageReceiveView(string id)
         {
             List<MessageReceivelist> Messages = new List<MessageReceivelist>();
@@ -114,7 +115,7 @@ namespace No9Gallery.Controllers
         }
 
         //进入信息修改界面
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult> ReviseView(string id)
         {
 
@@ -133,7 +134,7 @@ namespace No9Gallery.Controllers
         }
 
         //进入作品上传界面
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public IActionResult UploadView(string id)
         {
             ViewBag.ID = id;
@@ -143,7 +144,7 @@ namespace No9Gallery.Controllers
 
 
         //进入升级界面
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult> UpgradeView(string id,string flag,string result)
         {
             
@@ -159,7 +160,7 @@ namespace No9Gallery.Controllers
         }
 
         //进入充值界面
-        [Authorize]        
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult>ChargeView(string id)
         {
             
@@ -173,7 +174,7 @@ namespace No9Gallery.Controllers
         }
 
         //提升等级
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         public async Task<IActionResult>Upgrade(string id,string Level,string points)
         {
             string result;
@@ -190,31 +191,51 @@ namespace No9Gallery.Controllers
         }
 
         //信息修改
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         [HttpPost]
         public async Task<IActionResult> Revise(ReviseInfo reviseinfo)
         {
             reviseinfo.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-           
-                string Result = await PersonInfoservice.ReviseInfo(reviseinfo);
+            string nowAvatar = User.FindFirstValue("Avatar");
+
+            await HttpContext.SignOutAsync();
+            var claimIdentity = new ClaimsIdentity("Cookie");
+            claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, reviseinfo.UserID));
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Name, reviseinfo.NewUserName));
+            claimIdentity.AddClaim(new Claim("Avatar", nowAvatar));
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, "Commom"));
+            var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
+            await HttpContext.SignInAsync(claimsPrincipal);
+
+            string Result = await PersonInfoservice.ReviseInfo(reviseinfo);
             ViewBag.Result = Result;
 
-            return Redirect("/PersonInfo/ReviseView/"+reviseinfo.UserID);
+            return Redirect("/PersonInfo/Index/"+reviseinfo.UserID);
         }
 
         //头像上传
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         [HttpPost]
         public async Task<IActionResult> UploadAvatorAsync(List<IFormFile> files)
         {
-
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string nowName = User.FindFirstValue(ClaimTypes.Name);
+
+            await HttpContext.SignOutAsync();
+            var claimIdentity = new ClaimsIdentity("Cookie");
+            claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, id));
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Name, nowName));
+            claimIdentity.AddClaim(new Claim("Avatar", "Default.png"));
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, "Commom"));
+            var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
+            await HttpContext.SignInAsync(claimsPrincipal);
+
             string Result= await PersonInfoservice.Uploadavatar(id,files);                                    
             return Redirect("/PersonInfo/ReviseView/" +id);
         }
 
         //提交充值订单
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         [HttpPost]
         public async Task<IActionResult> Chargesubmit(string id)
         {
@@ -231,7 +252,7 @@ namespace No9Gallery.Controllers
         }
 
         //作品上传功能
-        [Authorize]
+        [Authorize(Roles = "Commom")]
         [HttpPost]
         public async Task<IActionResult> UploadWork(string id)
         {
@@ -246,7 +267,7 @@ namespace No9Gallery.Controllers
                 string result = await PersonInfoservice.UploadWork(User.FindFirst(ClaimTypes.NameIdentifier).Value,files,Workname,WorkType,Introduction);
             }
             
-            return Redirect("/PersonInfo/UploadView/" + id);
+            return Redirect("/PersonInfo/Index/" + id);
         }
 
 
