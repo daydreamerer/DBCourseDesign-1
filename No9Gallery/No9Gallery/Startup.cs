@@ -46,6 +46,7 @@ namespace No9Gallery
             services.AddSingleton<ILoginService, FakeLoginService>();
             services.AddSingleton<ISignUpService, FakeSignUpService>();
             services.AddSingleton<Services.IRetrieveImages, Services.RetrieveImages>();
+            services.AddSingleton<IPersonInfoService, PersonInfoService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -53,7 +53,7 @@ namespace No9Gallery.Services
                             "'" + signUpUser.ID + "'" + "," +
                             "'" + signUpUser.Name + "'" + "," +
                             "'" + signUpUser.Password + "'" + "," +
-                            "'Common'" + "," +
+                            "'Commom'" + "," +
                             "'Default.png'" + ")";
 
 

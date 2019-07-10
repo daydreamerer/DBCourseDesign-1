@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "PersonalRevise";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>个人信息修改</title>
+
+    <style type="text/css">
+        input {
+            margin: 10px 0;
+        }
+            /*无效输入时的样式*/
+            input:required:invalid {
+                background-image: url(error.png);
+                background-position: right center;
+                background-repeat: no-repeat;
+                border-color: red;
+                box-shadow: none;
+                /* 兼容FF13以前版本 */
+                -moz-box-shadow: none;
+            }
+            /*有效输入时的样式*/
+            input:required:valid {
+                background-image: url(true.png);
+                background-position: right center;
+                background-repeat: no-repeat;
+                border-color: green;
+                box-shadow: none;
+                /* 兼容FF13以前版本 */
+                -moz-box-shadow: none;
+            }
+    </style>
+
+
+</head>
+<body>
+    <form name=form1 onsubmit='return check()' asp-controller="PersonInfo" asp-action="Revise" method="post">
+        <p>
+            新用户名:
+            <input type="text" name="NewUserName" value=@ViewData["Name"] required oninvalid="setCustomValidity('请输入用户名')" oninput="setCustomValidity('')">
+            <br>
+            <br>
+            新密码:
+            <input type="password" name="NewPassword" value=@ViewData["Password"] required>
+            <br>
+            <br>
+            确认密码:
+            <input type="password" name="ConfirmPassword" value=@ViewData["Password"] required>
+            <br>
+            <br>
+            新简介:,
+            <textarea rows="2" cols="10" name="NewIntroduction" placeholder="请输入简介" style="width:500px; height:150px">@ViewData["Introduction"]</textarea>
+
+            <br><br>
+            <input type="submit" value="ReviseSubmit">
+        </p>
+    </form>
+
+    <form method="post" enctype="multipart/form-data" asp-controller="PersonInfo" asp-action="UploadAvatorAsync">
+        <div class="form-group">
+            <div class="col-md-10">
+                <p>Upload your new avator:</p>
+                <input type="file" id="files" name="files" accept="image/*">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Upload">
+            </div>
+        </div>
+    </form>
+
+    <script language='javascript'>
+            function check(){
+                var str=form1.NewPassword.value;
+                var SPECIAL_STR = "'~!%^&*();'\'?><[]{}\\|,:/=+—“”‘'";
+                for(i=0;i<str.length;i++)
+                    if (SPECIAL_STR.indexOf(str.charAt(i)) !=-1){
+                    alert('客户名不能以含有非法字符('+str.charAt(i)+')！');
+                    form1.NewPassword.focus();
+                    return false;}
+
+             var str2 = form1.ConfirmPassword.value;
+             if (str != str2) {
+                 alert('确认密码与原密码不一致');
+                 form1.ConfirmPassword.focus;
+                 return false;
+             }
+
+
+return true;
+}
+    </script>
+
+
+</body>
+
+
+<ml>

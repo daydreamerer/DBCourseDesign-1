@@ -113,6 +113,7 @@ namespace No9Gallery.Controllers
 
         public IActionResult SignOut()
         {
+            
             HttpContext.SignOutAsync();
             return RedirectToAction("Welcome", "Login");
         }
