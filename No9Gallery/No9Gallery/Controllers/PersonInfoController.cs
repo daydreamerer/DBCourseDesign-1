@@ -48,10 +48,46 @@ namespace No9Gallery.Controllers
             else
             {
                 //导入管理员界面，现在先回主界面
-               return Redirect("/Home/Index");
+               return Redirect("/PersonInfo/AdminView/?AdminName="+Info.VisitID+"&Avatar="+Info.HeadPortraitURL);
 
             }
             return View();
+        }
+
+        //进入管理员界面
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminView(string AdminName,string Avatar)
+        {
+            var id= User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.AdminID = id;
+            if(AdminName!=null&&Avatar!=null)
+            {
+                ViewBag.HeadPortraitURL = Avatar;
+                ViewBag.Name = AdminName;
+            }
+           else
+            {
+                var Info = await PersonInfoservice.GetPersonInfoAsync(id, id);
+                ViewBag.HeadPortraitURL = Info.HeadPortraitURL;
+                ViewBag.Name = Info.Name;
+            }
+            
+            List<MessageList> result = await PersonInfoservice.GetReportAsync();
+             string change=await PersonInfoservice.ChangeMessage();
+            return View(result);
+        }
+
+        //管理员发送信息
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> PostMessage()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var massage = Request.Form;
+            string ReceiverID = Request.Form["ReceiverID"];
+            string Content = Request.Form["Content"];
+            string result = await PersonInfoservice.PostMassage(id,ReceiverID,Content,time);
+            return Redirect("/PersonInfo/AdminView");
         }
 
         //改变关注状态
@@ -60,7 +96,21 @@ namespace No9Gallery.Controllers
         {
             var visitid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             string result = await PersonInfoservice.ChangeFollow(visitid, id);
-            return Redirect("/PerSonInfo/Index/" + id);
+            return Redirect("/PersonInfo/Index/" + id);
+        }
+
+
+        //进入信箱界面
+        [Authorize]
+        public async Task<IActionResult> MessageReceiveView(string id)
+        {
+            List<MessageReceivelist> Messages = new List<MessageReceivelist>();
+
+
+            Messages = await PersonInfoservice.GetMessageAsync(id);
+
+
+            return View(Messages);
         }
 
         //进入信息修改界面
@@ -114,7 +164,7 @@ namespace No9Gallery.Controllers
         {
             
             if (id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                return Redirect("/PerSonInfo/Index/" +id);
+                return Redirect("/PersonInfo/Index/" +id);
             ViewBag.ID =id;
 ;            List<Chargelist> ChargeList=await PersonInfoservice.GetChargeListAsync(id);
             int points = await PersonInfoservice.GetPointsAsync(id);
@@ -177,7 +227,7 @@ namespace No9Gallery.Controllers
             int points = await PersonInfoservice.GetPointsAsync(id);
             points = points + amount;
             var result = await PersonInfoservice.ChargeSubmit(order_no, id, amount, ConTent, chargetime,points);
-            return Redirect("/PerSonInfo/ChargeView/" + id);
+            return Redirect("/PersonInfo/ChargeView/" + id);
         }
 
         //作品上传功能
@@ -196,7 +246,20 @@ namespace No9Gallery.Controllers
                 string result = await PersonInfoservice.UploadWork(User.FindFirst(ClaimTypes.NameIdentifier).Value,files,Workname,WorkType,Introduction);
             }
             
-            return Redirect("/PerSonInfo/UploadView/" + id);
+            return Redirect("/PersonInfo/UploadView/" + id);
+        }
+
+
+
+        //设置信息为已读
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> setRead()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var msgid= Request.Form["toSetRead"].ToString();
+            string result = await PersonInfoservice.setRead(msgid);
+            return Redirect("/PersonInfo/MessageReceiveView/" + id);
         }
 
     }

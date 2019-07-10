@@ -1,0 +1,81 @@
+﻿@model IEnumerable<No9Gallery.Models.MessageList>
+@{
+    ViewData["Title"] = "Administrator";
+}
+
+<style>
+    .div_style1 {
+        position: absolute;
+        background: #fff;
+        border: 1px solid #000;
+    }
+
+    .div_style2 {
+        position: absolute;
+        background: #fff
+    }
+</style>
+<!--管理员头像-->
+<div class="div_style1" style="left: 300px; top: 300px; width: 120px; height: 120px">
+    <img src="~/image/avatar/@ViewData["HeadPortraitURL"]" width="120" height="120" />
+</div>
+<!--管理员名字-->
+<div class="div_style2" style="left: 450px; top: 360px; width: 600px; height: 190px">
+    <h1>@ViewData["Name"]</h1>
+</div>
+<!--发布信息-->
+<div class="div_style2" style="left: 300px; top: 480px; width:1320px; height: 240px">
+    <form asp-controller="PersonInfo" asp-action="PostMessage" method="post">
+        <textarea name="Content" style="width: 1320px; height: 120px; overflow: visible"></textarea><br /><br />
+        Send to:<input type="text" name="ReceiverID" />(Receiver's ID)<br /><br />
+        <input type="submit" value="Send">
+    </form>
+</div>
+
+<!--举报信息表-->
+<div class="div_style2" style="left:300px; top: 740px; width: 1320px">
+    <h1>Report</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.works_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.user_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.report_time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.report_content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.state)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.works_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.report_time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.report_content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.state)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

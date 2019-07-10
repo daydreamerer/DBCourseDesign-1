@@ -5,46 +5,44 @@
 <html>
 <head>
     <title>上传作品</title>
-
+    <style>
+        .UploadTitle {
+            font-size: 40px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
+    <div class="UploadTitle" style="position:absolute; top:150px; left:360px">
+        <span>Upload your work</span>
+    </div>
+
     <form method="post" enctype="multipart/form-data" asp-controller="PersonInfo" asp-action="UploadWork" asp-route-id="@ViewData["ID"]">
         <div class="form-group">
-            <div class="col-md-10">
-                <p>上传你的作品:</p>
+            <div class="col-md-10" style="position:absolute; top:250px; left:345px">
                 <input type="file" name="files" accept="image/*" required oninvalid="setCustomValidity('请上传你的作品')" oninput="setCustomValidity('')">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-10">
-                <span> 作品标题:</span>
-                <input type="text" name="NewWorkName" class="form-control" placeholder="请输入作品标题" required oninvalid="setCustomValidity('请输入标题')" oninput="setCustomValidity('')">
-                <br>
-
-                <span> 作品种类:</span>
-                <div>
-                    <input type="text" name="Worktype" id="WorkCategory" style="position:absolute;width:100px;height:25px;" z-index:10 value="Painting" />
-                    <select id="select" style="position:absolute;width:120px;height:25px;" z-index:1>
-                        <option value="1">Painting</option>
-                        <option value="2">Illustration</option>
-                        <option value="3">Photograph</option>
-                        <option value="4">Animation</option>
-                        <option value="5">UI Desgin</option>
-
-                        <lect>
-                </div>
+                
+        <input type="text" name="NewWorkName" style="position:absolute; top:300px; left:360px; width: 480px" class="form-control" placeholder="Title" required oninvalid="setCustomValidity('请输入标题')" oninput="setCustomValidity('')">
+                
 
 
-
-                <br />
-
-                <span> 作品简介:</span>
-                <textarea rows="3" cols="20" Maxlength=150 class="form-control" name="WorkIntroduction" placeholder="请输入作品简介" style="width:500px; height:150px"></textarea>
-
-                <input type="submit" value="上传作品！">
-            </div>
+        <div>
+            <select id="select" name="WorkType" style="position:absolute;width:180px; position:absolute; top:360px; left:360px;" class="form-control">
+                <option value="1" style="height: 30px">Painting</option>
+                <option value="2" style="height: 30px">Illustration</option>
+                <option value="3" style="height: 30px">Photograph</option>
+                <option value="4" style="height: 30px">Animation</option>
+                <option value="5" style="height: 30px">UI Desgin</option>
+            </select>
         </div>
+
+        <textarea rows="3" cols="20" Maxlength=150 class="form-control" name="WorkIntroduction" placeholder="Introduction" style="width:480px; height:150px; position:absolute; top:420px; left:360px;"></textarea>
+
+        <input type="submit" value="Upload" class="btn btn-primary btn-block btn-flat" style="position:absolute; left:360px; top: 600px; width: 120px">
+
     </form>
 
 
@@ -54,7 +52,6 @@
         $('#select option').on('click', function () {
             document.getElementById('WorkCategory').value = document.getElementById('select').options[document.getElementById('select').selectedIndex].value;
         })
-
     </script>
 
 

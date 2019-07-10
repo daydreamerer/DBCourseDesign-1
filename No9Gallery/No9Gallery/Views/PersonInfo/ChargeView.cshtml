@@ -3,23 +3,39 @@
 @{
     ViewData["Title"] = "Charge";
 }
-<img src="~/image/PersonView/Recharge.png" alt="recharge背景图" z-index:1/>
-<span style = "font-size:25px;position:absolute; left:540px; top: 150px;" > @ViewData["Points"] </span >
+
+<style>
+
+
+    .YourPoints {
+        font-size: 96px;
+        color: #009CFF;
+        font-weight: 600;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .pointRecords{
+        color:#009CFF;
+        font-size: 24px;
+        font-weight:600;
+    }
+</style>
+
+
+<img src="~/image/PersonView/Recharge.png" alt="recharge背景图" style="position:absolute; top: 60px; left:300px" />
+<span style="position:absolute; left:540px; top: 110px;" class="YourPoints"> @ViewData["Points"] </span>
+
 
 
 <div class="Charge-box-body">
-    <form name=form1 onsubmit='return check()' asp-controller="PersonInfo" asp-action="Chargesubmit" asp-route-id="@ViewData["ID"]" method="post" style="position:absolute; left:300px; top: 60px; " >
-
-        <input type="text" name="ChargeAmount" placeholder="输入充值金额" required style="position:absolute; left:300px; top: 360px; width: 300px; height: 40px " oninput="value=value.replace(/[^\d]/g,'')" z-index:10>
-        <input type="submit" value="提交订单" style="position:absolute; left:300px; top: 430px; width: 100px; height:40px ">
-
+    <form name=form1 onsubmit='return check()' asp-controller="PersonInfo" asp-action="Chargesubmit" asp-route-id="@ViewData["ID"]" method="post">
+        <div class="form-group has-feedback">
+            <input type="text" name="ChargeAmount" class="form-control" placeholder="Amount" style="position:absolute; left:300px; top: 390px; width: 240px; height: 40px;" oninput="value=value.replace(/[^\d]/g,'')">
+            <input type="submit" value="Recharge" class="btn btn-primary btn-block btn-flat" style="position:absolute; left:570px; top: 390px; width: 120px; ">
+        </div>
     </form>
 </div>
 
-<span style="font-size:30px;position:absolute; left:660px; top: 540px;"> 消费记录列表 </span>
-
-
-<table class="table" style="position:absolute; left:360px; top: 600px;">
+<table class="table" style="position:absolute; left:300px; top: 450px; width: 1320px">
     <thead>
         <tr>
             <th>

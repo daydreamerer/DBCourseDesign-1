@@ -1,4 +1,10 @@
-﻿.Show {
+﻿body {
+    background: #FAFAFA;
+    font: Google Sans;
+    color: #112D4E;
+}
+
+.Show {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
     border-radius: 8px;
 }
