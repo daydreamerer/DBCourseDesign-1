@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "UpgradeLevel";
+}
+
+<!--显示当前等级-->
+<div style="position:absolute; left:300px; top:60px">
+    <img src="~/Image/PersonView/Membership.png" />
+    <span style="position: absolute; top: 60px; left: 960px; color: deeppink; font-size:100px;">Lv.@ViewData["MembershipLevel"]</span>
+</div>
+
+<div id="upgrade" style="position:absolute; left:840px; top: 360px">
+    <a asp-controller="PersonInfo" asp-action="Upgrade" asp-route-id="@ViewData["ID"]" asp-route-Level="@ViewData["MembershipLevel"]" asp-route-points="@ViewData["Points"]"><img src="~/Image/PersonView/UpgradeButton.png" /></a>
+    @if (Convert.ToBoolean(ViewData["Flag"]))
+    {
+        if (Convert.ToBoolean(@ViewData["result"]))
+        {
+            <div>
+                升级成功！
+            </div>
+        }
+        else
+        {
+            <div>
+                升级失败，可能是积分余额不足！
+            </div>
+        }
+    }
+
+
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="~/lib/axios/axios.js"></script>
+    <script src="~/js/UpgradeLevelComponent.js"></script>
+}

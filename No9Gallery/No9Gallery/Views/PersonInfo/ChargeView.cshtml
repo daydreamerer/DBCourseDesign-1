@@ -1,0 +1,61 @@
+﻿
+@model IEnumerable<No9Gallery.Models.Chargelist>
+@{
+    ViewData["Title"] = "Charge";
+}
+<img src="~/image/PersonView/Recharge.png" alt="recharge背景图" z-index:1/>
+<span style = "font-size:25px;position:absolute; left:540px; top: 150px;" > @ViewData["Points"] </span >
+
+
+<div class="Charge-box-body">
+    <form name=form1 onsubmit='return check()' asp-controller="PersonInfo" asp-action="Chargesubmit" asp-route-id="@ViewData["ID"]" method="post" style="position:absolute; left:300px; top: 60px; " >
+
+        <input type="text" name="ChargeAmount" placeholder="输入充值金额" required style="position:absolute; left:300px; top: 360px; width: 300px; height: 40px " oninput="value=value.replace(/[^\d]/g,'')" z-index:10>
+        <input type="submit" value="提交订单" style="position:absolute; left:300px; top: 430px; width: 100px; height:40px ">
+
+    </form>
+</div>
+
+<span style="font-size:30px;position:absolute; left:660px; top: 540px;"> 消费记录列表 </span>
+
+
+<table class="table" style="position:absolute; left:360px; top: 600px;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.order_no)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order_no)
+                </td>
+                <td>
+                    +@Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.time)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
