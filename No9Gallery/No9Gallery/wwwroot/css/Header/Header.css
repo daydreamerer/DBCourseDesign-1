@@ -1,18 +1,20 @@
 ﻿.avatar {
-    width: 100%;
-    height: 100%;
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.10);
 }
 
-.avatarBox {
-    border-radius: 6px;
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
+
+.Logo {
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .search-box {
-    width: 240px;
-    height: 40px;
+    width: 300px;
+    height: 36px;
     border-radius: 6px;
     outline: none;
     border: 1px solid #ccc;
@@ -20,10 +22,10 @@
 }
 
 .search-btn {
-    height: 25px;
-    width: 25px;
-    top: 15px;
-    background: url("../image/主页面控件/Search.png");
+    height: 20px;
+    width: 20px;
+    top: 20px;
+    background: url("../../image/Header/SearchIcon.png");
     border: none;
     outline: none;
     cursor: pointer;

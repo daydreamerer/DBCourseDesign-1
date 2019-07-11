@@ -15,6 +15,7 @@ namespace No9Gallery.Controllers
         private readonly ILoginService _loginService;
         private readonly ISignUpService _signUpService;
 
+
         public LoginController(
             ILoginService loginService,
             ISignUpService signUpService)
@@ -23,12 +24,13 @@ namespace No9Gallery.Controllers
             _signUpService = signUpService;
         }
 
-        public IActionResult Welcome()
+        public async Task<IActionResult> Welcome()
         {
+            await HttpContext.SignOutAsync();
             return View();
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             await HttpContext.SignOutAsync();
             LoginUser user = new LoginUser();
@@ -93,7 +95,7 @@ namespace No9Gallery.Controllers
                             claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.ID));
                             claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
                             claimIdentity.AddClaim(new Claim("Avatar", "Default.png"));
-                            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, "Common"));
+                            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, "Commom"));
 
                             var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
                             await HttpContext.SignInAsync(claimsPrincipal);
@@ -111,6 +113,7 @@ namespace No9Gallery.Controllers
 
         public IActionResult SignOut()
         {
+            
             HttpContext.SignOutAsync();
             return RedirectToAction("Welcome", "Login");
         }
